@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
 
-function App() {
+import React, { useState, useEffect } from 'react';
+import HomePage from './components/Homepage';
+import Chat from './components/Chat';
+
+type Page = 'home' | 'chat';
+
+const App: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [isDark, setIsDark] = useState<boolean>(false);
+
+  // Load theme preference from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      setIsDark(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      // Default to system preference
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setIsDark(systemPrefersDark);
+      if (systemPrefersDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    
+    if (newIsDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
+  const startChat = () => {
+    setCurrentPage('chat');
+  };
+
+  const goHome = () => {
+    setCurrentPage('home');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {currentPage === 'home' ? (
+        <HomePage 
+          onStartChat={startChat} 
+          isDark={isDark} 
+          toggleTheme={toggleTheme}
+        />
+      ) : (
+        <Chat 
+          onBack={goHome} 
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+        />
+      )}
+    </>
   );
-}
+};
 
 export default App;
