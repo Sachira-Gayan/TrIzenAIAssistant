@@ -4,5 +4,6 @@
         ".vscode{,/**}"
     ],
     "appService.defaultWebAppToDeploy": "/subscriptions/d14971d6-6f40-4194-8608-5394f10206eb/resourceGroups/JKIT-RnD-SMART/providers/Microsoft.Web/sites/TrizenAssistantWebApp",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    "sarif-viewer.connectToGithubCodeScanning": "off"
 }
