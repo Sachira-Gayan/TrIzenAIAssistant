@@ -11,8 +11,8 @@
     "@azure/msal-react": "^3.0.21",
     "@microsoft/agents-copilotstudio-client": "^1.0.15",
 
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
 
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

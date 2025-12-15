@@ -13,7 +13,7 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ onStartChat, isDark, toggleTheme }) => {
-  const features = [
+  /*const features = [
     {
       icon: <Zap className="h-6 w-6" />,
       title: "Lightning Fast",
@@ -44,7 +44,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartChat, isDark, toggleTheme })
       title: "Data Protection",
       description: "Complete data privacy with no storage of personal conversations"
     }
-  ];
+  ];*/
 
   return (
     <div className={`min-h-screen transition-all duration-500 ${
