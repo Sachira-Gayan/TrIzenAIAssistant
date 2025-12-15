@@ -64,19 +64,21 @@ const Chat: React.FC<ChatProps> = ({ onBack, isDark, toggleTheme }) => {
   };
 
   useEffect(() => {
+    const agentsSetting=agentsSettings;
+    const webchatSetting= webchatSettings;
     const initializeChat = async () => {
       try {
         setIsLoading(true);
         setError(null);
         
         // Check if settings are configured
-        if (!agentsSettings.appClientId || !agentsSettings.tenantId) {
+        if (!agentsSetting.appClientId || !agentsSetting.tenantId) {
           throw new Error('Please configure your settings.js file with the required values');
         }
 
-        const token = await acquireToken(agentsSettings);
-        const client = new CopilotStudioClient(agentsSettings, token);
-        const webChatConnection = CopilotStudioWebChat.createConnection(client, webchatSettings);
+        const token = await acquireToken(agentsSetting);
+        const client = new CopilotStudioClient(agentsSetting, token);
+        const webChatConnection = CopilotStudioWebChat.createConnection(client, webchatSetting);
         
         setConnection(webChatConnection);
         
@@ -89,7 +91,7 @@ const Chat: React.FC<ChatProps> = ({ onBack, isDark, toggleTheme }) => {
     };
 
     initializeChat();
-  }, [agentsSettings, webchatSettings]);
+  }, []);
 
   if (isLoading) {
     return (
