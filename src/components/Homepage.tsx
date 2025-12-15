@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { MessageCircle, Sparkles, Zap, Moon, Sun, ArrowRight, Bot, Users, Shield, Star, Globe, Lock } from 'lucide-react';
+import { MessageCircle, Sparkles, Moon, Sun, ArrowRight, Bot } from 'lucide-react';
 
 interface HomePageProps {
   onStartChat: () => void;

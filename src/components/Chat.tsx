@@ -89,7 +89,7 @@ const Chat: React.FC<ChatProps> = ({ onBack, isDark, toggleTheme }) => {
     };
 
     initializeChat();
-  }, []);
+  }, [agentsSettings, webchatSettings]);
 
   if (isLoading) {
     return (
