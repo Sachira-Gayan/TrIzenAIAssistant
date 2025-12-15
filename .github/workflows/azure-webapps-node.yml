@@ -52,4 +52,4 @@ jobs:
           app-name: 'TrizenAssistantWebApp'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.__publishingprofilesecretname__ }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_657B780E3B674F0A88CE831887013DE5 }}
