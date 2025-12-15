@@ -24,61 +24,60 @@ const Chat: React.FC<ChatProps> = ({ onBack, isDark, toggleTheme }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  let agentsSettings: ConnectionSettings;
+  
 
-  try {
-    agentsSettings = require('../settings').credSettings;
-  } catch (error) {
-    console.error(error + '\nsettings.js Not Found. Rename settings.EXAMPLE.js to settings.js and fill out necessary fields');
-    agentsSettings = {
+  useEffect(() => {
+    let agentsSettings: ConnectionSettings;
+
+    try {
+      agentsSettings = require('../settings').credSettings;
+    } catch (error) {
+      console.error(error + '\nsettings.js Not Found. Rename settings.EXAMPLE.js to settings.js and fill out necessary fields');
+      agentsSettings = {
       appClientId: '',
       tenantId: '',
       environmentId: '',
       agentIdentifier: '',
       directConnectUrl: '',
-    } as ConnectionSettings;
-  }
-
-  const webchatSettings = { 
-    showTyping: true,
-    // Add dark theme support
-    styleSet: isDark ? {
-      backgroundColor: '#1f2937',
-      primaryFont: 'Inter, system-ui, sans-serif',
-      bubbleBackground: '#374151',
-      bubbleTextColor: '#f9fafb',
-      bubbleFromUserBackground: '#3b82f6',
-      bubbleFromUserTextColor: '#ffffff',
-      subtle: '#6b7280',
-      accent: '#3b82f6'
-    } : {
-      backgroundColor: '#ffffff',
-      primaryFont: 'Inter, system-ui, sans-serif',
-      bubbleBackground: '#f3f4f6',
-      bubbleTextColor: '#1f2937',
-      bubbleFromUserBackground: '#3b82f6',
-      bubbleFromUserTextColor: '#ffffff',
-      subtle: '#6b7280',
-      accent: '#3b82f6'
+      } as ConnectionSettings;
     }
-  };
 
-  useEffect(() => {
-    const agentsSetting=agentsSettings;
-    const webchatSetting= webchatSettings;
+    const webchatSettings = { 
+      showTyping: true,
+    // Add dark theme support
+        styleSet: isDark ? {
+        backgroundColor: '#1f2937',
+        primaryFont: 'Inter, system-ui, sans-serif',
+        bubbleBackground: '#374151',
+        bubbleTextColor: '#f9fafb',
+        bubbleFromUserBackground: '#3b82f6',
+        bubbleFromUserTextColor: '#ffffff',
+        subtle: '#6b7280',
+        accent: '#3b82f6'
+      } : {
+        backgroundColor: '#ffffff',
+        primaryFont: 'Inter, system-ui, sans-serif',
+        bubbleBackground: '#f3f4f6',
+        bubbleTextColor: '#1f2937',
+        bubbleFromUserBackground: '#3b82f6',
+        bubbleFromUserTextColor: '#ffffff',
+        subtle: '#6b7280',
+        accent: '#3b82f6'
+      }
+    };
     const initializeChat = async () => {
       try {
         setIsLoading(true);
         setError(null);
         
         // Check if settings are configured
-        if (!agentsSetting.appClientId || !agentsSetting.tenantId) {
+        if (!agentsSettings.appClientId || !agentsSettings.tenantId) {
           throw new Error('Please configure your settings.js file with the required values');
         }
 
-        const token = await acquireToken(agentsSetting);
-        const client = new CopilotStudioClient(agentsSetting, token);
-        const webChatConnection = CopilotStudioWebChat.createConnection(client, webchatSetting);
+        const token = await acquireToken(agentsSettings);
+        const client = new CopilotStudioClient(agentsSettings, token);
+        const webChatConnection = CopilotStudioWebChat.createConnection(client, webchatSettings);
         
         setConnection(webChatConnection);
         
@@ -91,7 +90,7 @@ const Chat: React.FC<ChatProps> = ({ onBack, isDark, toggleTheme }) => {
     };
 
     initializeChat();
-  }, []);
+  }, [isDark]);
 
   if (isLoading) {
     return (
