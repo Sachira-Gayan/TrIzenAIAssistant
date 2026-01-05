@@ -20,6 +20,7 @@ export async function acquireToken(settings: ConnectionSettings): Promise<string
   };
   // When there are not accounts or the acquireTokenSilent fails,
   // it will fall back to loginPopup.
+  // get all accounts
   try {
     const accounts = await msalInstance.getAllAccounts();
     if (accounts.length > 0) {
